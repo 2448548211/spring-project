@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+    <!--启用注解注册-->
+    <context:component-scan base-package="com.clever.chen.spring"/>
+    <!--scopr默认是单例模式-->
+    <bean id="user" class="com.clever.chen.spring.bean.User"
+          scope="singleton"
+          init-method="init"
+          destroy-method="destory"
+          lazy-init="true"
+          p:id = "1"
+          p:username="zs"
+    >
+        <!-- p:addrs-ref="addrs"
+          p:scores-ref="scores"-->
+        <!--普通属性-->
+        <property name="password" value="123456"/>
+        <!--属性是对象，需要注册该对象-->
+        <property name="homeTown" ref="homeTown"/>
+        <!--属性是集合-->
+        <property name="addrs" >
+            <list >
+                <value type="com.clever.chen.spring.bean.Address"/>
+                <value type="com.clever.chen.spring.bean.Address"/>
+            </list>
+        </property>
+        <!--属性是map-->
+        <property name="scores" >
+            <map>
+                <entry key="math" value="98" />
+                <entry key="english" value="97" />
+                <entry key="Chinese" value="96" />
+            </map>
+        </property>
+    </bean>
+    <bean id="homeTown" class="com.clever.chen.spring.bean.Address"
+          scope="prototype"
+          lazy-init="true"
+    >
+    </bean>
+
+    <!--<util:list id="addrs">
+        <value type="com.clever.chen.spring.bean.Address"/>
+        <value type="com.clever.chen.spring.bean.Address"/>
+    </util:list>-->
+    <!--<util:map id="scores">
+        &lt;!&ndash; value-ref="" &ndash;&gt;
+        <entry key="math" value="98" />
+        <entry key="english" value="97" />
+        <entry key="Chinese" value="96" />
+    </util:map>-->
+
+</beans>
